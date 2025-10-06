@@ -13,6 +13,18 @@ export const CreateToken = async (user) => {
         console.log("Error - AuthService - CreateToken - ", error);
     }
 }
+export const CreateTokenTemp = async (user) => {
+    try {
+        const payload = {
+            id: user.id,
+            email: user.email
+        };
+
+        return JWT.sign(payload, JWT_SECRET, { expiresIn: "5m" });
+    } catch (error) {
+        console.log("Error - AuthService - CreateToken - ", error);
+    }
+}
 export const checkToken = async (token) => {
     try {
         return JWT.verify(token, JWT_SECRET);
