@@ -6,14 +6,7 @@ import { sendMail } from "../services/MailService.js";
 const SERVER_ADDRESS = process.env.SERVER_ADDRESS;
 
 export const createUser = async (req, res) => {
-    let { name, email, mobile, password } = req.body || {};
-    name = (name || '').trim();
-    email = (email || '').trim();
-    mobile = (mobile || '').trim();
-    password = (password || '').trim();
-    if (!email || !name || !mobile || !password) {
-        return res.status(200).json({ "Error": "All Fields Are required - Missing Info" });
-    }
+    let { name, email, mobile, password } = req.bodyData || {};
     try {
         const hashPassword = await createPassword(password);
         const createdUser = await UserModel.Create({ name, email, mobile, "password": hashPassword });
